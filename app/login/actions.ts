@@ -21,8 +21,10 @@ export async function login(formData: FormData) {
     redirect('/error')
   }
 
+  // Revalidate both layout and current route
   revalidatePath('/', 'layout')
-  redirect('/')
+
+  redirect('/private')
 }
 
 export async function signup(formData: FormData) {
@@ -43,6 +45,7 @@ export async function signup(formData: FormData) {
 
   revalidatePath('/', 'layout')
   redirect('/')
+
 }
 
 
@@ -55,4 +58,6 @@ export async function logout() {
     if (error) {
         redirect('/error')
     }
+    revalidatePath('/', 'layout')
+
 }

@@ -6,11 +6,9 @@ export default function Footer() {
     const year = new Date().getFullYear();
     return (
         <div className="p-4">
-            <footer className="bg-white rounded-lg  shadow-lg  dark:bg-gray-800">
-                <div className="w-full p-4   ">
-                    <p className="text-xs text-gray-500 dark:text-gray-400 text-center">Denne hjemmeside er kun en reklameplatform og har ingen forbindelse eller ansvar med de steder eller personer, der annoncerer her. Vi leverer kun reklameplads og er ikke et escortbureau eller på nogen måde involveret i vores annoncørers forretninger.</p>
-                </div>
-                <div className="w-full md:flex md:items-center md:justify-between p-4 border-t border-t-zinc-100">
+            <footer className="">
+                
+                <div className="w-full md:flex md:items-center md:justify-between p-4 border-t border-t-zinc-100 bg-white rounded-lg  shadow-lg  dark:bg-gray-800">
                     <span className="text-sm text-gray-500  dark:text-gray-400">&copy; {year} Voksenannoncer.
                     </span>
                     <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
@@ -33,6 +31,9 @@ export default function Footer() {
                             <Link href="/cookie-policy" className="hover:underline">Cookie policy</Link>
                         </li>
                     </ul>
+                </div>
+                <div className="w-full p-4">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 text-center">Denne hjemmeside er kun en reklameplatform og har ingen forbindelse eller ansvar med de steder eller personer, der annoncerer her. Vi leverer kun reklameplads og er ikke et escortbureau eller på nogen måde involveret i vores annoncørers forretninger.</p>
                 </div>
 
             </footer>

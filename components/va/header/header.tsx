@@ -1,14 +1,14 @@
-// "use client"
 import Image from "next/image"
-
 import HeaderAuth from "./header-auth"
 import Link from "next/link"
-// import Menu from "./menu"
+import { createClient } from "@/utils/supabase/server"
+export default async function Header() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser()
+  console.log(user);
 
-export default function Header() {
   return (
     <header className="w-full flex items-center justify-between p-4">
-
       <div>
         <Link href="/">
           <Image src="/images/logo-24x24.svg" width="24" height="24" className="size-12" alt="Logo" />
@@ -17,8 +17,7 @@ export default function Header() {
       <div>
         {/* <Menu /> */}
       </div>
-      <HeaderAuth />
-
+      <HeaderAuth usr={user}/>
     </header >
   )
 }

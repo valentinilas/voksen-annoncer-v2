@@ -18,16 +18,36 @@ import { logout } from "@/app/login/actions"
 
 // import Menu from "./menu"
 import Link from "next/link"
-import { useState } from "react"
-
-export default function HeaderAuth() {
+import { useEffect, useState } from "react"
+interface HeaderAuthProps {
+    usr: User | null;
+}
+export default function HeaderAuth({ usr }: HeaderAuthProps) {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
-    const { auth } = createClient();
-    auth.onAuthStateChange((_, session) => {
-        setUser(session?.user ?? null);
-        setLoading(false);
-    });
+
+    useEffect(() => {
+        const supabase = createClient();
+
+        const checkSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            console.log("Initial session check:", session); // Debug log
+            setUser(session?.user ?? null);
+            setLoading(false);
+        };
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+            console.log("Auth state changed:", event, session); // Debug log
+            setUser(session?.user ?? null);
+            setLoading(false);
+        });
+
+        checkSession();
+
+        return () => {
+            subscription.unsubscribe();
+        };
+    }, []);
 
     if (loading) {
         return (
@@ -40,11 +60,14 @@ export default function HeaderAuth() {
 
     return (
         <div className="flex gap-4">
-            {user ? (
+            {usr ? (
                 <>
                     <DropdownMenu>
+                        {usr.email}
                         <DropdownMenuTrigger asChild>
+
                             <Avatar className="cursor-pointer hover:opacity-80 size-12">
+
                                 <AvatarImage src="https://github.com/shadcn.png" />
                                 <AvatarFallback><UserIcon /></AvatarFallback>
                             </Avatar>
@@ -65,7 +88,9 @@ export default function HeaderAuth() {
                                     onClick={(e) => {
                                         e.preventDefault();
                                         logout();
-
+                                        // Force a re-render or update
+                                        // setUser(null);
+                                        // setLoading(false);
                                     }}
                                 >
                                     <LogOutIcon className="mr-2 h-4 w-4" />Log out

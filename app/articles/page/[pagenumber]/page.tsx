@@ -120,13 +120,13 @@ export default async function Articles(props: {params: Params}) {
     );
 }
 
-export const revalidate = 3600;
-// Static Params Generation (for SSG)
-export async function generateStaticParams() {
-    const { totalPages } = await fetchArticles({ page: 1, limit: 12 });
-    const pageCount = totalPages ?? 0;
-    console.log('Generating paths for blog pages: %c%s', 'color: green; font-weight: bold;', pageCount);
-    return Array.from({ length: pageCount }, (_, i) => ({
-        page: `${i + 1}` 
-    }));
-}
+// export const revalidate = 3600;
+// // Static Params Generation (for SSG)
+// export async function generateStaticParams() {
+//     const { totalPages } = await fetchArticles({ page: 1, limit: 12 });
+//     const pageCount = totalPages ?? 0;
+//     console.log('Generating paths for blog pages: %c%s', 'color: green; font-weight: bold;', pageCount);
+//     return Array.from({ length: pageCount }, (_, i) => ({
+//         page: `${i + 1}` 
+//     }));
+// }
