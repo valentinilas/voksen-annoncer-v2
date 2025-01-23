@@ -7,11 +7,11 @@ import Link from "next/link"
 
 export default function Header() {
   return (
-    <header className="flex items-center justify-between py-4">
+    <header className="w-full flex items-center justify-between p-4">
 
       <div>
         <Link href="/">
-          <Image src="/images/logo-24x24.svg" width="24" height="24" className="size-16" alt="Logo" />
+          <Image src="/images/logo-24x24.svg" width="24" height="24" className="size-12" alt="Logo" />
         </Link>
       </div>
       <div>

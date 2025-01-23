@@ -12,13 +12,11 @@ export const revalidate = 3600;
 export async function generateStaticParams() {
     try {
         const { articles, total } = await fetchAllArticles();
-        console.log('Fetched articles:', total);
 
         const paths = articles.map((article: Article) => ({
             slug: article.Slug,
         }));
-        console.log(paths);
-        console.log('Generated paths');
+        console.log('Generating paths for each article: %c%s', 'color: green; font-weight: bold;', total);
 
         return paths;
     } catch (error) {

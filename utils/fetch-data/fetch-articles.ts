@@ -12,71 +12,114 @@ interface PaginatedResponse {
     totalDocs: number;
     totalPages: number;
 }
+interface FetchOptions {
+    page?: number;
+    limit?: number;
+}
 
-export const fetchAllArticles = async (): Promise<{ articles: Article[], total: number, error: string | null }> => {
-    const baseUrl = 'https://cms.voksen-annoncer.com/api/posts';
+export const fetchArticles = async (
+    options?: FetchOptions
+): Promise<{
+    articles: Article[],
+    total: number,
+    error: string | null,
+    hasNextPage?: boolean,
+    hasPrevPage?: boolean,
+    nextPage?: number,
+    prevPage?: number | null,
+    totalPages?: number,
+    page?: number
+}> => {
+    const baseUrl = "https://cms.voksen-annoncer.com/api/posts";
+    const { page = 1, limit = 10 } = options || {}; // Default to page 1, limit 10 if not provided
     let articles: Article[] = [];
-    
 
     try {
-        const firstPageRes = await fetch(`${baseUrl}`, {
+        const url = `${baseUrl}?page=${page}&limit=${limit}`;
+        const res = await fetch(url, {
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                Accept: "application/json",
+                "Content-Type": "application/json",
             },
-            cache: 'no-store',
-            signal: AbortSignal.timeout(10000)
+            cache: 'force-cache',
+            signal: AbortSignal.timeout(10000),
         });
 
-        if (!firstPageRes.ok) {
-            throw new Error(`Failed to fetch first page: ${firstPageRes.statusText}`);
+        if (!res.ok) {
+            throw new Error(`Failed to fetch articles: ${res.statusText}`);
         }
 
-        const firstPageData: PaginatedResponse = await firstPageRes.json();
-        articles = [...firstPageData.docs];
-        
-        let currentPage = 1;
-        const { totalPages } = firstPageData;
-        
-        // Fetch remaining pages with delay
-        while (currentPage < totalPages) {
-            currentPage++;
-            
-            console.log(`Fetching page ${currentPage}/${totalPages}`);
-            
-            try {
-                const res = await fetch(`${baseUrl}?page=${currentPage}`, {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                   
-                });
-
-                if (res.ok) {
-                    const data: PaginatedResponse = await res.json();
-                    articles = [...articles, ...data.docs];
-                }
-            } catch (error) {
-                console.error(`Failed to fetch page ${currentPage}:`, error);
-                continue; // Continue with next page if one fails
-            }
-        }
-
+        const data: PaginatedResponse = await res.json();
+        articles = data.docs;
         return {
             articles,
-            total: articles.length,
-            error: null
+            total: data.totalDocs,
+            hasNextPage: data.hasNextPage,
+            hasPrevPage: data.hasPrevPage,
+            nextPage: data.nextPage,
+            prevPage: data.prevPage,
+            totalPages: data.totalPages,
+            page: data.page,
+            error: null,
         };
     } catch (error) {
-        console.error('Error in fetchArticles:', error);
+        console.error("Error in fetchArticles:", error);
         return {
             articles,
-            total: articles.length,
-            error: (error as Error).message
+            total: 0,
+            error: (error as Error).message,
         };
     }
 };
+
+export const fetchAllArticles = async (): Promise<{
+    articles: Article[];
+    total: number;
+    error: string | null;
+}> => {
+    const baseUrl = "https://cms.voksen-annoncer.com/api/posts";
+    let articles: Article[] = [];
+    let currentPage = 1;
+    let totalPages = 1; // Initialize to 1 to start the loop
+    let error: string | null = null;
+
+    try {
+        while (currentPage <= totalPages) {
+            const url = `${baseUrl}?page=${currentPage}`;
+            const res = await fetch(url, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                cache: "no-store",
+                signal: AbortSignal.timeout(10000),
+            });
+
+            if (!res.ok) {
+                throw new Error(`Failed to fetch page ${currentPage}: ${res.statusText}`);
+            }
+
+            const data: PaginatedResponse = await res.json();
+            articles = [...articles, ...data.docs];
+            totalPages = data.totalPages; // Update totalPages from response
+            currentPage++; // Increment to fetch the next page
+        }
+
+        return {
+            articles,
+            total: articles.length,
+            error: null,
+        };
+    } catch (err) {
+        console.error("Error in fetchAllArticles:", err);
+        return {
+            articles,
+            total: articles.length,
+            error: (err as Error).message,
+        };
+    }
+};
+
 
 
 

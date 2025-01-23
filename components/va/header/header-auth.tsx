@@ -12,7 +12,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { LoadingSpinner } from "./loadingSpinner"
+import { LoadingSpinner } from "../common/loading-spinner/loadingSpinner"
 import { logout } from "@/app/login/actions"
 
 
@@ -44,7 +44,7 @@ export default function HeaderAuth() {
                 <>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Avatar className="cursor-pointer hover:opacity-80 size-14">
+                            <Avatar className="cursor-pointer hover:opacity-80 size-12">
                                 <AvatarImage src="https://github.com/shadcn.png" />
                                 <AvatarFallback><UserIcon /></AvatarFallback>
                             </Avatar>
