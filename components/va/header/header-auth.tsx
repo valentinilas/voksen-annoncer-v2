@@ -64,6 +64,7 @@ export default function HeaderAuth({ usr }: HeaderAuthProps) {
                 <>
                     <DropdownMenu>
                         {usr.email}
+                        {user?.email}
                         <DropdownMenuTrigger asChild>
 
                             <Avatar className="cursor-pointer hover:opacity-80 size-12">
