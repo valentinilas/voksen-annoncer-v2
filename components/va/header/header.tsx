@@ -1,12 +1,7 @@
 import Image from "next/image"
 import HeaderAuth from "./header-auth"
 import Link from "next/link"
-import { createClient } from "@/utils/supabase/server"
 export default async function Header() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser()
-  console.log(user);
-
   return (
     <header className="w-full flex items-center justify-between p-4">
       <div>
@@ -17,7 +12,7 @@ export default async function Header() {
       <div>
         {/* <Menu /> */}
       </div>
-      <HeaderAuth usr={user}/>
+      <HeaderAuth/>
     </header >
   )
 }

@@ -132,15 +132,16 @@ export const fetchArticle = async (slug: string): Promise<FetchSingleArticleResp
     if (!slug) {
         return { article: null, articleError: 'Slug is required' };
     }
+    const url = `https://cms.voksen-annoncer.com/api/posts?where[Slug][equals]=${slug}`;
 
     try {
         const res = await fetch(
-            `https://cms.voksen-annoncer.com/api/posts?where[Slug][equals]=${slug}`
+            url
         );
 
         // Check if the response is ok (status code 200)
         if (!res.ok) {
-            throw new Error(`Failed to fetch post: ${res.statusText}`);
+            throw new Error(`Failed to fetch post: ${res.statusText} url: ${url}`);
         }
 
         // Parse the JSON response

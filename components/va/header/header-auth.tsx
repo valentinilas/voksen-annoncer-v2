@@ -19,16 +19,14 @@ import { logout } from "@/app/login/actions"
 // import Menu from "./menu"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-interface HeaderAuthProps {
-    usr: User | null;
-}
-export default function HeaderAuth({ usr }: HeaderAuthProps) {
+
+export default function HeaderAuth() {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const supabase = createClient();
-
+        
         const checkSession = async () => {
             const { data: { session } } = await supabase.auth.getSession();
             console.log("Initial session check:", session); // Debug log
@@ -60,15 +58,14 @@ export default function HeaderAuth({ usr }: HeaderAuthProps) {
 
     return (
         <div className="flex gap-4">
-            {usr ? (
+            {user ? (
                 <>
                     <DropdownMenu>
-                        {usr.email}
-                        {user?.email}
+                    {user.email}
                         <DropdownMenuTrigger asChild>
-
+                       
                             <Avatar className="cursor-pointer hover:opacity-80 size-12">
-
+                               
                                 <AvatarImage src="https://github.com/shadcn.png" />
                                 <AvatarFallback><UserIcon /></AvatarFallback>
                             </Avatar>

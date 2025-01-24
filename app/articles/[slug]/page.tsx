@@ -2,28 +2,13 @@
 
 
 import { Article } from '@/types';
-import { fetchAllArticles, fetchArticle } from '@/utils/fetch-data/fetch-articles';
+import { fetchAllArticles } from '@/utils/fetch-data/fetch-articles';
+import {fetchArticle } from '@/utils/fetch-data/fetch-articles';
 import Markdown from 'react-markdown';
 // import Image from "next/image";
 // import Link from "next/link";
 
-// export const revalidate = 3600;
-// // This ensures all possible paths are generated at build time
-export async function generateStaticParams() {
-    try {
-        const { articles, total } = await fetchAllArticles();
 
-        const paths = articles.map((article: Article) => ({
-            slug: article.Slug,
-        }));
-        console.log('Generating paths for each article: %c%s', 'color: green; font-weight: bold;', total);
-
-        return paths;
-    } catch (error) {
-        console.error('Error generating static params:', error);
-        return [];
-    }
-}
 
 // export async function generateMetadata({ params, searchParams }) {
 //     const { slug, locale } = await params;
@@ -114,3 +99,23 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         </article>
     </>
 }
+
+
+
+// export const revalidate = 3600;
+// // This ensures all possible paths are generated at build time
+// export async function generateStaticParams() {
+//     try {
+//         const { articles, total } = await fetchAllArticles();
+
+//         const paths = articles.map((article: Article) => ({
+//             slug: article.Slug,
+//         }));
+//         console.log('Generating paths for each article: %c%s', 'color: green; font-weight: bold;', total);
+
+//         return paths;
+//     } catch (error) {
+//         console.error('Error generating static params:', error);
+//         return [];
+//     }
+// }
