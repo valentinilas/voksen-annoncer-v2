@@ -1,11 +1,28 @@
+"use client"
 
-import { createClient } from '@/utils/supabase/server'
+import { useUser } from "@/context/UserContext"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
-export default async function PrivatePage() {
-  const supabase = await createClient()
+export default function PrivatePage() {
+  const { user, loading } = useUser()
+  const router = useRouter()
 
-  const { data } = await supabase.auth.getUser()
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/login")
+    }
+  }, [user, loading, router])
 
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
-  return <p>Hello {data?.user?.email}</p>
+  return (
+    <div>
+      <h1>Welcome to the Private Page</h1>
+      <p>Hello, {user?.email}!</p>
+      {/* Add more private content here */}
+    </div>
+  )
 }
