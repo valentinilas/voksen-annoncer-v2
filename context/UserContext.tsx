@@ -9,6 +9,7 @@ import {
 } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { User } from "@supabase/supabase-js";
+import { fetchUserProfile } from "@/app/login/actions";
 
 interface UserProfile {
   id: string;
@@ -34,36 +35,56 @@ interface UserContextType {
 
 interface UserProviderProps {
   children: ReactNode;
-  initialUser: User | null;
-  initialUserProfile: UserProfile | null;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export const UserProvider = ({
-  children,
-  initialUser,
-  initialUserProfile,
-}: UserProviderProps) => {
-  const [user, setUser] = useState<User | null>(initialUser);
+export const UserProvider = ({ children }: UserProviderProps) => {
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [userProfile] = useState<UserProfile | null>(initialUserProfile);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 
   const supabase = createClient();
 
   useEffect(() => {
-    // Listen for auth changes and update user accordingly
-    const { data: subscription } = supabase.auth.onAuthStateChange(
-      (_, session) => {
-        setUser(session?.user ?? null);
-        setLoading(false);
-      },
-    );
+    setLoading(true);
+    (async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user ?? null);
+      if (user) {
+        const { userProfile: profile } = await fetchUserProfile(user.id);
+        setUserProfile(profile);
+      }
+      setLoading(false);
+    })();
 
-    return () => {
-      subscription.subscription.unsubscribe();
-    };
+    // Listening to login events. Not needed for now, as we are using setUser and server side actions.
+    // const { data: subscription } = supabase.auth.onAuthStateChange(
+    //   (_, session) => {
+    //     setUser(session?.user ?? null);
+    //     setLoading(false);
+    //   },
+    // );
+
+    // return () => {
+    //   subscription.subscription.unsubscribe();
+    // };
   }, [supabase]);
+
+  useEffect(() => {
+    console.log("Login detected, fetching profile");
+
+    if (user) {
+      (async () => {
+        const { userProfile: profile } = await fetchUserProfile(user.id);
+        setUserProfile(profile);
+      })();
+    } else {
+      setUserProfile(null); // Clear profile when no user
+    }
+  }, [user]);
 
   return (
     <UserContext.Provider

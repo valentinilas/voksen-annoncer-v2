@@ -4,8 +4,7 @@ import Header from "@/components/va/header/header";
 import Footer from "@/components/va/footer/footer";
 import { Geist } from "next/font/google";
 import { UserProvider } from "@/context/UserContext";
-import { createClient } from "@/utils/supabase/server";
-import { fetchUserProfile } from "./login/actions";
+
 import { ThemeProvider } from "@/context/ThemeContext";
 export const metadata: Metadata = {
   metadataBase: new URL(`${process.env.NEXT_PUBLIC_BASE_URL}`),
@@ -24,17 +23,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  let userProfile = null;
-
-  if (user) {
-    const { userProfile: profile } = await fetchUserProfile(user.id);
-    userProfile = profile;
-  }
   return (
     <html lang="en" className={geistSans.className}>
       <body>
@@ -44,10 +32,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <UserProvider
-            initialUser={user ?? null}
-            initialUserProfile={userProfile}
-          >
+          <UserProvider>
             <div className="container mx-auto px-4 ">
               <Header />
               <div className="w-full mx-auto p-4">{children}</div>
