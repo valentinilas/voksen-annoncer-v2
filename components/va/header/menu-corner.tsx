@@ -61,7 +61,7 @@ export default function MenuCorner() {
                   <div className="flex items-center gap-2 cursor-pointer hover:opacity-80">
                     <span className="text-sm">{userProfile?.username}</span>
 
-                    <Avatar className=" size-12">
+                    <Avatar className="border size-12 ring ring-muted ">
                       {userProfile?.avatar_url && (
                         <AvatarImage
                           src={cdnUrl(userProfile?.avatar_url, 48, 48)}

@@ -4,7 +4,6 @@ import Header from "@/components/va/header/header";
 import Footer from "@/components/va/footer/footer";
 import { Geist } from "next/font/google";
 import { UserProvider } from "@/context/UserContext";
-
 import { ThemeProvider } from "@/context/ThemeContext";
 export const metadata: Metadata = {
   metadataBase: new URL(`${process.env.NEXT_PUBLIC_BASE_URL}`),

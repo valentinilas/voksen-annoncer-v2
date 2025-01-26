@@ -49,7 +49,7 @@ export default function Footer() {
           </span>
         </div>
         <div className="w-full p-4">
-          <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+          <p className="text-xs text-black/50  dark:text-white/50 text-center">
             Denne hjemmeside er kun en reklameplatform og har ingen forbindelse
             eller ansvar med de steder eller personer, der annoncerer her. Vi
             leverer kun reklameplads og er ikke et escortbureau eller på nogen
