@@ -100,7 +100,7 @@ export default async function ArticlePage({
         {/* <div className=" mx-auto  px-2 py-3 ">
                 <Link href="/">Home</Link> / <Link href="/articles">Articles</Link> / <span>{Title}</span>
             </div> */}
-        <div className="mt-10 text-center">
+        <div className="mt-10">
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>

@@ -1,3 +1,11 @@
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 export default function Om() {
   return (
     <div className="p-5 md:p-10">
@@ -80,6 +88,20 @@ export default function Om() {
           <strong>Voksenannoncer - Hvor forbindelser begynder.</strong>
         </p>
       </footer>
+      <div className="mt-10">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Hjem</BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Om</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
     </div>
   );
 }

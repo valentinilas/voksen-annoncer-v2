@@ -174,7 +174,7 @@ export default async function Articles(props: { params: Params }) {
           </PaginationContent>
         </Pagination>
       </div>
-      <div className="mt-10 text-center">
+      <div className="mt-10">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>

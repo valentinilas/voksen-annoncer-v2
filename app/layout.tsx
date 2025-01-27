@@ -24,7 +24,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en" className={geistSans.className}>
-      <body>
+      <body className="selection:bg-red-600">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

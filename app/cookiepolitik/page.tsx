@@ -1,3 +1,11 @@
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 export default function CookiePolitik() {
   return (
     <div className="p-5 md:p-10">
@@ -130,6 +138,20 @@ export default function CookiePolitik() {
           </a>
         </p>
       </section>
+      <div className="mt-10">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Hjem</BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Cookiepolitik</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
     </div>
   );
 }

@@ -1,3 +1,12 @@
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+
 import WordListComponent from "@/components/va/word-list/word-list-component";
 export default function Ordliste() {
   return (
@@ -14,6 +23,20 @@ export default function Ordliste() {
       <section>
         <WordListComponent />
       </section>
+      <div className="mt-10">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Hjem</BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Ordliste</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
     </div>
   );
 }
