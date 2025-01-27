@@ -3,6 +3,9 @@ import { cdnUrl } from "@/utils/imagekit/cdn-url";
 import { FetchRandomAdsResponse } from "@/types/va-types";
 import { Ad } from "@/types/va-types";
 import { AdImage } from "@/types/va-types";
+
+// Cache for 6 hours = 21600 seconds
+export const revalidate = 21600;
 export const fetchRandomPublicAds = async (
   count: number = 12,
 ): Promise<FetchRandomAdsResponse> => {

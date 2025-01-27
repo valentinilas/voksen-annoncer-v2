@@ -4,7 +4,6 @@ import RegionLinks from "@/components/va/region-links/region-links";
 import Link from "next/link";
 import FeaturedAdsComponent from "@/components/va/featured-ads/featured-ads-component";
 
-export const revalidate = 60;
 export default async function Home() {
   return (
     <div className="">
