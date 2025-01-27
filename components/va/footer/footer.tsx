@@ -1,5 +1,6 @@
 // "use client"
 import Link from "next/link";
+import { FooterLinks } from "./footer-links";
 import { ThemeToggle } from "./theme-toggle";
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -12,36 +13,18 @@ export default function Footer() {
               <ThemeToggle />
             </div>
           </li>
-          <li>
-            <Link href="/" className="hover:underline me-4 md:me-6">
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link href="/articles" className="hover:underline me-4 md:me-6">
-              Blog
-            </Link>
-          </li>
-          <li>
-            <Link href="/word-guide" className="hover:underline me-4 md:me-6">
-              Word guide
-            </Link>
-          </li>
-          <li>
-            <Link href="/about" className="hover:underline me-4 md:me-6">
-              About
-            </Link>
-          </li>
-          <li>
-            <Link href="/support" className="hover:underline me-4 md:me-6">
-              Support
-            </Link>
-          </li>
-          <li>
-            <Link href="/cookie-policy" className="hover:underline">
-              Cookie policy
-            </Link>
-          </li>
+          {FooterLinks.map((footerLink) => {
+            return (
+              <li key={footerLink.id}>
+                <Link
+                  href={footerLink.href}
+                  className="hover:underline me-4 md:me-6"
+                >
+                  {footerLink.title}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
         <span className="text-sm block mt-10 md:mt-0 text-black/50  dark:text-white/50">
           &copy; {year} Voksenannoncer.

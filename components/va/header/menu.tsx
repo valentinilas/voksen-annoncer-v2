@@ -12,7 +12,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
-import { MenuLinks } from "./menuLinks";
+import { MenuLinks } from "./menu-links";
 export default function Menu() {
   return (
     <>

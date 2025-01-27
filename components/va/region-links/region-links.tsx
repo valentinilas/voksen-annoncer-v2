@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { fetchRegions } from "@/utils/fetch-data/fetch-regions";
 import Link from "next/link";
 
-// Revalidate for 60 seconds
-export const revalidate = 60;
+// Revalidate for 1 week
+export const revalidate = 604800;
 export default async function RegionLinks() {
   const { regions } = await fetchRegions();
   return (

@@ -25,7 +25,7 @@ import { cdnUrl } from "@/utils/imagekit/cdn-url";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
-import { MenuLinks } from "./menuLinks";
+import { MenuLinks } from "./menu-links";
 
 export default function MenuCorner() {
   const { user, loading, setUser, userProfile } = useUser();
