@@ -4,7 +4,7 @@ import Menu from "./menu";
 import MenuCorner from "./menu-corner";
 export default async function Header() {
   return (
-    <header className="w-full flex items-center justify-between p-4">
+    <header className="w-full flex items-center justify-between py-4">
       <div className="w-1/2 flex justify-start">
         <Link href="/">
           <Image

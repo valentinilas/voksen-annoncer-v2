@@ -1,14 +1,18 @@
-
-
-
-import { Article } from '@/types';
-import { fetchAllArticles } from '@/utils/fetch-data/fetch-articles';
-import {fetchArticle } from '@/utils/fetch-data/fetch-articles';
-import Markdown from 'react-markdown';
+import { Article } from "@/types";
+import { fetchAllArticles } from "@/utils/fetch-data/fetch-articles";
+import { fetchArticle } from "@/utils/fetch-data/fetch-articles";
+import Markdown from "react-markdown";
 // import Image from "next/image";
 // import Link from "next/link";
 
-
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 // export async function generateMetadata({ params, searchParams }) {
 //     const { slug, locale } = await params;
@@ -44,44 +48,42 @@ import Markdown from 'react-markdown';
 //     li: ({ _node, ...props }) => <li className="my-1" {...props} />,
 // };
 
+export default async function ArticlePage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
 
+  // const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/articles/${slug}`, {
+  //     next: { tags: ['public-posts'] }
+  // });
 
+  // const response: { article: Article } = await res.json();
+  const { article } = await fetchArticle(slug); // Now 'article' is typed as Article
 
-export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
-
-    const { slug } = await params;
-
-
-    // const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/articles/${slug}`, {
-    //     next: { tags: ['public-posts'] }
-    // });
-
-    // const response: { article: Article } = await res.json();
-    const { article } = await fetchArticle(slug); // Now 'article' is typed as Article
-
-
-    if (!article) {
-        return <>
-            <article>
-                <div className="bg-base-100 p-20 rounded-box shadow-sm">
-                    <h1 className="text-4xl mb-5 text-center">Ikke fundet</h1>
-
-                </div>
-            </article>
-        </>
-    }
-
-    const { Title, 'Body Text': BodyText, createdAt, Author, Summary } = article;
-    // console.log(article);
-    return <>
+  if (!article) {
+    return (
+      <>
         <article>
+          <div className="bg-base-100 p-20 rounded-box shadow-sm">
+            <h1 className="text-4xl mb-5 text-center">Ikke fundet</h1>
+          </div>
+        </article>
+      </>
+    );
+  }
 
-            <div className=" mx-auto bg-base-100 p-10 rounded-box">
+  const { Title, "Body Text": BodyText, createdAt, Author, Summary } = article;
+  // console.log(article);
+  return (
+    <>
+      <article>
+        <div className=" ">
+          <h1 className="text-4xl mb-5 ">{Title}</h1>
+          <p>{Summary}</p>
 
-                <h1 className="text-4xl mb-5 ">{Title}</h1>
-                <p>{Summary}</p>
-
-                {/* <Image
+          {/* <Image
                     src={`https://cms.voksen-annoncer.com${articleImage?.url}`}
                     alt={articleImage?.alt}
                     width={articleImage?.width}
@@ -89,33 +91,55 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                     className="rounded-lg mx-auto size-full my-10"
                 /> */}
 
-                <Markdown className="prose prose-lg" >{BodyText}</Markdown>
-                <p className="pt-10">{Author} | {createdAt} </p>
-            </div>
+          <Markdown className="prose prose-lg">{BodyText}</Markdown>
+          <p className="pt-10">
+            {Author} | {createdAt}{" "}
+          </p>
+        </div>
 
-            {/* <div className=" mx-auto  px-2 py-3 ">
+        {/* <div className=" mx-auto  px-2 py-3 ">
                 <Link href="/">Home</Link> / <Link href="/articles">Articles</Link> / <span>{Title}</span>
             </div> */}
-        </article>
+        <div className="mt-10 text-center">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">Hjem</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/articles">Artikler</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{article.Title}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </article>
     </>
+  );
 }
-
-
 
 export const revalidate = 3600;
 // This ensures all possible paths are generated at build time
 export async function generateStaticParams() {
-    try {
-        const { articles, total } = await fetchAllArticles();
+  try {
+    const { articles, total } = await fetchAllArticles();
 
-        const paths = articles.map((article: Article) => ({
-            slug: article.Slug,
-        }));
-        console.log('Generating paths for each article: %c%s', 'color: green; font-weight: bold;', total);
+    const paths = articles.map((article: Article) => ({
+      slug: article.Slug,
+    }));
+    console.log(
+      "Generating paths for each article: %c%s",
+      "color: green; font-weight: bold;",
+      total,
+    );
 
-        return paths;
-    } catch (error) {
-        console.error('Error generating static params:', error);
-        return [];
-    }
+    return paths;
+  } catch (error) {
+    console.error("Error generating static params:", error);
+    return [];
+  }
 }

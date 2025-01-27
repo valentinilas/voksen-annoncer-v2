@@ -2,16 +2,17 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight, Plus } from "lucide-react";
 import RegionLinks from "@/components/va/region-links/region-links";
 import Link from "next/link";
+
 export const revalidate = 60;
 export default async function Home() {
   return (
-    <div className="container mx-auto px-4">
+    <div className="">
       <div className="max-w-4xl pt-32 pb-32 mx-auto text-center">
         <h1 className="text-charcoal-600 text-5xl md:text-7xl mb-11">
           Build products that <br />
           people actually want
         </h1>
-        <p className="text-center text-xl mb-11 ">
+        <p className="text-center text-lg md:text-xl mb-11 ">
           Velkommen til Voksenannoncer – din førende platform for voksne, hvor
           du kan finde alt fra{" "}
           <Link className="underline" href="/search/sex">
