@@ -1,5 +1,5 @@
-import { NextResponse, type NextRequest } from 'next/server'
-import { updateSession } from '@/utils/supabase/middleware'
+import { NextResponse, type NextRequest } from "next/server";
+import { updateSession } from "@/utils/supabase/middleware";
 
 // export async function middleware(request: NextRequest) {
 //   if (request.nextUrl.pathname.startsWith('/about')) {
@@ -9,14 +9,14 @@ import { updateSession } from '@/utils/supabase/middleware'
 // }
 
 export async function middleware(request: NextRequest) {
-  // Redirect `/articles` to `/articles/page/1`
-  if (request.nextUrl.pathname === '/articles') {
-    const url = new URL('/articles/page/1', request.url);
+  // Redirect `/artikler` to `/artikler/page/1`
+  if (request.nextUrl.pathname === "/artikler") {
+    const url = new URL("/artikler/side/1", request.url);
     return NextResponse.redirect(url, 308); // Use 308 for permanent redirect
   }
 
   // Handle session update
-  return await updateSession(request) || NextResponse.next();
+  return (await updateSession(request)) || NextResponse.next();
 }
 
 export const config = {
@@ -28,6 +28,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * Feel free to modify this pattern to include more paths.
      */
-    '/((?!_next/static|_next/image|favicon.ico|icon.svg|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    "/((?!_next/static|_next/image|favicon.ico|icon.svg|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
-}
+};

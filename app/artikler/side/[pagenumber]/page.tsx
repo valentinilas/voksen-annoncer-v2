@@ -118,7 +118,7 @@ export default async function Articles(props: { params: Params }) {
               </CardContent>
               <CardFooter className="mt-auto">
                 <Button asChild>
-                  <Link href={`/articles/${article.Slug}`}>
+                  <Link href={`/artikler/${article.Slug}`}>
                     Læs mere <ArrowRight className="ml-2" />
                   </Link>
                 </Button>
@@ -131,7 +131,7 @@ export default async function Articles(props: { params: Params }) {
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
-                href={hasPrevPage ? `/articles/page/${prevPage}` : "#"}
+                href={hasPrevPage ? `/artikler/side/${prevPage}` : "#"}
                 className={!hasPrevPage ? "hidden" : ""}
                 aria-disabled={!hasPrevPage}
               >
@@ -144,7 +144,7 @@ export default async function Articles(props: { params: Params }) {
               return (
                 <PaginationItem key={pageNum}>
                   <PaginationLink
-                    href={`/articles/page/${pageNum}`}
+                    href={`/artikler/side/${pageNum}`}
                     isActive={page === pageNum}
                   >
                     {pageNum}
@@ -164,7 +164,7 @@ export default async function Articles(props: { params: Params }) {
 
             <PaginationItem>
               <PaginationNext
-                href={hasNextPage ? `/articles/page/${nextPage}` : "#"}
+                href={hasNextPage ? `/artikler/side/${nextPage}` : "#"}
                 className={!hasNextPage ? "hidden" : ""}
                 aria-disabled={!hasNextPage}
               >
@@ -182,7 +182,7 @@ export default async function Articles(props: { params: Params }) {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink href="/articles">Artikler</BreadcrumbLink>
+              <BreadcrumbLink href="/artikler">Artikler</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>

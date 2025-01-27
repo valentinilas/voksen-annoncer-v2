@@ -1,4 +1,4 @@
-import { fetchRandomPublicAds } from "@/utils/fetch-data/fetch-ads";
+import { fetchRandomPublicAds } from "@/utils/fetch-data/fetch-ads-featured";
 import { FeaturedAdsSlider } from "./featured-ads-slider";
 
 export default async function FeaturedAdsWrapper({ vertical = false }) {
